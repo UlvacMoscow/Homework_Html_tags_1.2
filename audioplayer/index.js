@@ -5,57 +5,54 @@ const playlist = ['mp3/LA Chill Tour.mp3',
 const namePlaylist = ['LA Chill Tour',
                       'LA Fusion Jam',
                       'This is it band']
-/*const playstate = document.getElementsByClassName('playstate');
-const PlayAndPause = playstate.getElementsByTagName('i');
-
-if (PlayAndPause.length)    {
-    console.log('Найдена хотя бы одна кнопка')
-} else {
-    console.log('не ни одного тега <i>')
-}*/
-
-/*const PlayAndPause = document.querySelectorAll('playstate.i');
-
-if (PlayAndPause.length)    {
-    console.log('Найдена хотя бы одна кнопка')
-} else {
-    console.log('не ни одного тега <i>')
-}*/
 
 
-/*PlayAndPause[0].onclick() = function()  {
-    var audio = new Audio();
-    audio.src = playlist[0];
-    audio.autoplay = true;
-}*/
 var song = 0;
-const audio = new Audio();
+const player = document.getElementsByClassName('mediaplayer')[0];
+const audio = player.getElementsByTagName('audio')[0];
 const title = document.getElementsByTagName('span')[0];
 
-const play = document.getElementsByClassName('playstate')[0].onclick = function()    {
-    audio.src = playlist[song];
-    audio.play();
+//console.log(playlist[song])
+
+function setCurrentTrack() {
+  audio.src = playlist[song];
+  title.title = namePlaylist[song];
+
+  if (player.classList.contains('play')) {
+    audio.play()
+  }
 }
 
-document.getElementsByClassName('fa fa-pause')[0].onclick = function() {
-    audio.pause();
+const playAndPause = document.getElementsByClassName('playstate')[0].onclick = function()    {
+  player.classList.contains('play') ? audio.pause() : audio.play();
+  player.classList.toggle('play');
 }
+
 
 document.getElementsByClassName('next')[0].onclick = function() {
-    song += 1;
-    title.setAttribute('title', namePlaylist[song])
-    audio.src = playlist[song];
-    audio.play();
+  if (song >= namePlaylist.length - 1) {
+     song = 0;
+   } else {
+     song++;
+   }
+   setCurrentTrack();
 }
+
 
 document.getElementsByClassName('back')[0].onclick = function() {
-    song -= 1;
-    title.setAttribute('title', namePlaylist[song])
-    audio.src = playlist[song];
-    audio.play();
-}
+    if (song <= 0) {
+      song = namePlaylist.length - 1;
+    } else {
+      song--;
+    }
+    setCurrentTrack();
+  }
+
 
 document.getElementsByClassName('stop')[0].onclick = function() {
-    audio.pause();
-    audio.currentTime = 0;
+  if (player.classList.contains('play')) {
+    player.classList.remove('play');
+  }
+  audio.pause();
+  audio.currentTime = 0;
 }

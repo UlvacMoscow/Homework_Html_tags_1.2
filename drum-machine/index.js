@@ -1,3 +1,16 @@
+//AllTagLi = document.getElementsByTagName('li');
+
+const AllTagLi = document.getElementsByClassName('drum-kit__drum');
+const audio = document.getElementsByTagName('audio');
+
+for (let i = 0; i < AllTagLi.length; i++) {
+  AllTagLi[i].onclick = () => {
+    audio[i].play();
+  };
+}
+
+
+/*
 var playlist = ['wav/clap.wav',
                 'wav/boom.wav',
                 'wav/hihat.wav',
@@ -48,4 +61,4 @@ document.getElementsByClassName('key-ride')[0].onclick = function () {
 чтобы я не дублировал код.
 
 по типу если нажал такую кнопку, то играет такая мелодия.
-Как это можно реализовать, если можно. 
+Как это можно реализовать, если можно.*/
